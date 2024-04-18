@@ -77,6 +77,8 @@ public:
     /*
     adds all items to the nodes vector and creates empty lists for each node
       in the adjacencyList.
+
+    AdjacencyList[node] gives a vector that contains the neighboring nodes from node
     */
     void addNodes(vector<NodeType> items){
         for(int i = 0; i < items.size(); i++){
@@ -97,52 +99,74 @@ public:
             cout << "Inserting edge: " << start << "," << end << endl;
             AdjacencyList[start].push_back(end);
         }
-    }
+    } //addEdge ends
 
+    // TODO: implement this
+    /*
+    preCondition: start is a valid node in the graph
+    postCondition: 
+        1. all nodes reachable from start will be in the visited vector
+        2. the pre and post times for all visited nodes will be updated
+    */
     void Explore(NodeType start){
         cout << "Exploring " << start << endl;
-        visited.push_back(start);
-        pre[start] = time;
-        time++;
-        for (int i = 0; i < AdjacencyList[start].size(); i++){
-            if(!contains(visited, AdjacencyList[start][i])){
-                Explore(AdjacencyList[start][i]);
-            }
-        }
-        post[start] = time;
-        time++;
-    }
+        // TODO: your code goes here
 
+        // first add start to visited
+        
+        // from each edge (start, v) starting from start
+        //  if v has not been visited, visit v
+        // Note: you can access the neighboring nodes from start
+        //  with AdjacencyList[start]
+        // AdjacencyList[start][0] gives you the first neighbor from start and so on
+
+    } //Explore ends
+
+    //DFS starts
+    // Once Explore(start) has been implemented, this should automatically work
     void DepthFirstSearch(){
         startNewSearch();
         for (int v = 0; v < nodes.size(); v++){
             if(!inVisited(nodes[v]))
                 Explore(nodes[v]);
         }
-    }
+    } //DFS ends
 
+    // BFS starts
+    // TODO: complete this this
+    /*
+    preCondition: start is a valid node in the graph
+    postCondition: all nodes reachable from start are put into the visited vector
+
+    Hint: 
+      I suggest you to use C++'s standard queue for this. (but you can change it if you want)
+      queue has functions push and pop that do the same thing as enqueue/dequeue  
+    */
     void BreadthFirstSearch(NodeType start){
         startNewSearch();
         cout << "Starting from node: " << start << endl;
         queue<NodeType> Q;
         Q.push(start);
         distances[make_pair(start, start)] = 0;
-        while(!(Q.empty())){
-            NodeType top = Q.front();
-            Q.pop();
-            if(inVisited(top))
-                continue;
-            visited.push_back(top);
-            for(int i = 0; i < AdjacencyList[top].size(); i++){
-                NodeType nxt = AdjacencyList[top][i];
-                if(!inVisited(nxt)){
-                    distances[make_pair(start, nxt)] = distances[make_pair(start, top)] + 1;
-                    Q.push(nxt);
-                }
-            }
-        }
-    }
+        
+        // TODO: your code starts here
 
+        //  Hint: The distance between two nodes u, v can be accessed by
+        //      distances[make_pair(u, v)]
+        
+        /* while (Q is not empty)
+        {
+            u = queue.pop()
+            for all edges (u, v) starting at u
+                if v not in visited
+                    add v to Q
+                    update v's distance
+        }
+        */
+    } // BFS ends
+
+    // helper function to be started at the beginning of every new search to clear
+    //  all relevant variables
     void startNewSearch(){
         time = 0;
         visited.clear();
@@ -151,19 +175,9 @@ public:
         distances.clear();
     }
 
+    // helper function to see if a node has been visited already 
     bool inVisited(NodeType u){
         return contains(visited, u);
     }
 
-    Graph<NodeType> reverseGraph(){
-        Graph<NodeType> reverseG;
-        reverseG.addNodes(nodes);
-        for (int v = 0; v < nodes.size(); v++){
-            vector<NodeType> lstv = AdjacencyList[nodes[v]];
-            for(int i = 0; i < lstv.size(); i++){
-                reverseG.addEdge(lstv[i], nodes[v]);
-            }
-        }
-        return reverseG;
-    }
 };

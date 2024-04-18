@@ -102,41 +102,5 @@ int main(int argc, char** argv){
                 << G.distances[make_pair(G.nodes[0], nxt)] << endl;
     }
 
-    cout << "Getting the reverse graph, RG" << endl;
-
-    cout << "DFS in RG" << endl;
-    Graph<string> rG = G.reverseGraph();
-    for (int v = 0; v < rG.nodes.size(); v++){
-        if(!rG.inVisited(rG.nodes[v]))
-            rG.Explore(rG.nodes[v]);
-    }
-
-    cout << "pre-post in RG" << endl;
-    for (int i = 0; i < rG.nodes.size(); i++){
-        cout << rG.nodes[i] << ": " << rG.pre[rG.nodes[i]] << " " << rG.post[rG.nodes[i]] << endl;
-    } 
-
-    cout << "sorting according to RG.post" << endl;
-    vector<string> nodesCopy = G.nodes;
-    sort(nodesCopy.begin(), nodesCopy.end(), [&](string a, string b)-> bool {
-                                                return rG.post[a] > rG.post[b];
-                                                });
-    
-    for (int i = 0; i < nodesCopy.size();i++)
-        cout << nodesCopy[i] << " ";
-    cout << endl;
-
-    cout << "getting the SCCs" << endl;
-    int cc = 0;
-    
-    G.startNewSearch();
-    for (int i = 0; i < nodesCopy.size(); i++){
-        if(!G.inVisited(nodesCopy[i])){
-            cout << "Component " << cc << ": " << nodesCopy[i] << endl;
-            G.Explore(nodesCopy[i]);
-            cc++;
-        }
-    }
-
     return 0;
 }
