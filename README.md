@@ -15,12 +15,14 @@ After compiling graphTest, you can run with command line options.
 
     ./graphTest
 * This creates an example graph (shown below) with three nodes and no cycles
+
 [Example Graph](./imgs/exampleGraph.png)
 
 #### cycle:
 
     ./graphTest cycle
 * This creates an example graph with five nodes and two cycles
+
 [Example Cycle](./imgs/exampleCycle.png)
 
 #### input
