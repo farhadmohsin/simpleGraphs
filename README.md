@@ -16,7 +16,7 @@ After compiling graphTest, you can run with command line options.
     ./graphTest
 * This creates an example graph (shown below) with three nodes and no cycles
 
-[Example Graph](./imgs/exampleGraph.png)
+[Example Graph](./imgs/exampleGraph.png raw=true)
 
 #### cycle:
 
